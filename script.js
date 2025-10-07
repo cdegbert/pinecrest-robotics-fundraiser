@@ -324,6 +324,7 @@ async function submitOrder() {
         fullName: formData.get('fullName'),
         phone: formData.get('phone'),
         email: formData.get('email'),
+        studentName: formData.get('studentName'),
         items: cart,
         total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)
     };
