@@ -30,7 +30,7 @@ const products = [
 ];
 
 // Google Apps Script URL
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxIrs7KdsimRvfQ7v2sSw-YuzVUqs5Lf5aXAiskv9_BkBO0UVZ1Ar7e2_MsUj-TT-od/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwOz3MxqqR9aC0SOAjrhusUbhBGCbU2jqmwqvonHCNk8zZdd0rZYkWLrDEZU4YptovOEg/exec';
 
 // Cart functionality
 let cart = [];
