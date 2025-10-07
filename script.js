@@ -400,22 +400,37 @@ async function submitOrder() {
     document.querySelector('.submit-order-btn').disabled = true;
     
     try {
-        // Send to Google Sheets
-        const response = await fetch(GOOGLE_SCRIPT_URL, {
+        // Check if Google Script URL is set
+        if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+            throw new Error('Google Script URL not configured');
+        }
+        
+        console.log('Sending order to Google Sheets:', orderData);
+        
+        // Send to Google Sheets using fetch
+        fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors',
+            cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json',
             },
+            redirect: 'follow',
             body: JSON.stringify(orderData)
+        }).then(() => {
+            console.log('Order sent to Google Sheets');
+        }).catch((error) => {
+            console.error('Fetch error:', error);
         });
         
         // Save order for admin panel
         saveOrderForAdmin(orderData);
         
-        // Show success message
+        // Show success message (note: with no-cors mode, we can't verify the response)
         hideOrderMessages();
         document.getElementById('orderSuccessMessage').style.display = 'block';
+        
+        console.log('Order submitted successfully');
         
         // Clear cart and reset form after 2 seconds
         setTimeout(() => {
