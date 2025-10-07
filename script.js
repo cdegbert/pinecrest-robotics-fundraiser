@@ -7,7 +7,7 @@ const products = [
         price: 14.00,
         priceXXL: 16.00,
         sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-        image: "images/dm130-tee.jpg"  // Updated to use images folder
+        image: "images/dm130-tee.jpg.png"  // Updated to match actual filename
     },
     {
         id: 2,
@@ -16,7 +16,7 @@ const products = [
         price: 21.00,
         priceXXL: 23.00,
         sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-        image: "images/dt6104-crewneck.jpg"  // Updated to use images folder
+        image: "images/dt6104-crewneck.jpg.png"  // Updated to match actual filename
     },
     {
         id: 3,
@@ -25,13 +25,13 @@ const products = [
         price: 18.00,
         priceXXL: 20.00,
         sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-        image: "images/dm132-longsleeve.jpg"  // Updated to use images folder
+        image: "images/dm132-longsleeve.jpg.png"  // Updated to match actual filename
     }
 ];
 
 // IMPORTANT: Replace this with your Google Apps Script Web App URL
 // Instructions to get this URL are in the setup guide
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxIrs7KdsimRvfQ7v2sSw-YuzVUqs5Lf5aXAiskv9_BkBO0UVZ1Ar7e2_MsUj-TT-od/exec';
 
 // Cart functionality
 let cart = JSON.parse(localStorage.getItem('sloanCanyonCart')) || [];
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function loadLogoImage() {
     const logoContainer = document.getElementById('logoImage');
     const logoImg = new Image();
-    logoImg.src = 'images/logo.png';
+    logoImg.src = 'images/logo.jpg.png';  // Updated to match actual filename
     logoImg.alt = 'Pinecrest Robotics Logo';
     logoImg.style.width = '100%';
     logoImg.style.height = '100%';
