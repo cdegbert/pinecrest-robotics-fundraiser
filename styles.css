@@ -40,8 +40,14 @@ body {
 
 .logo-image {
     height: 80px;
-    width: auto;
-    object-fit: contain;
+    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .logo-text h1 {
@@ -168,17 +174,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
-    color: #64748b;
-    border: 2px dashed #cbd5e1;
+    border: 2px solid #e2e8f0;
     overflow: hidden;
-}
-
-.product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 6px;
 }
 
 .product-image-placeholder {
@@ -187,7 +184,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
+    font-size: 4rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: 6px;
 }
 
 .product-title {

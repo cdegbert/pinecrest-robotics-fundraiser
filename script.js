@@ -42,6 +42,16 @@ const checkoutModal = document.getElementById('checkoutModal');
 const checkoutForm = document.getElementById('checkoutForm');
 const closeModal = document.querySelector('.close');
 
+// Get product emoji based on product ID
+function getProductEmoji(productId) {
+    const emojis = {
+        1: "👕", // DM130 Tri blend Tee
+        2: "🧥", // DT6104 Crewneck Fleece  
+        3: "👔"  // DM132 Long Sleeve Tee
+    };
+    return emojis[productId] || "🤖";
+}
+
 // Initialize the app
 document.addEventListener('DOMContentLoaded', function() {
     renderProducts();
@@ -58,8 +68,7 @@ function renderProducts() {
         productCard.className = 'product-card';
         productCard.innerHTML = `
             <div class="product-image">
-                <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="product-image-placeholder" style="display: none;">🤖</div>
+                <div class="product-image-placeholder">${getProductEmoji(product.id)}</div>
             </div>
             <h3 class="product-title">${product.name}</h3>
             <p class="product-description">${product.description}</p>
