@@ -18,9 +18,9 @@ body {
     padding: 0 20px;
 }
 
-/* Header Styles - Updated to Teal */
+/* Header Styles - Updated to Pinecrest Blue */
 .header {
-    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+    background: linear-gradient(135deg, #00a2ed 0%, #0091d4 100%);
     color: white;
     padding: 1rem 0;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -95,9 +95,9 @@ body {
     margin-left: 0.5rem;
 }
 
-/* Hero Section - Updated to Teal */
+/* Hero Section - Updated to Pinecrest Blue */
 .hero {
-    background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
+    background: linear-gradient(135deg, #e0f4ff 0%, #b3e5fc 100%);
     padding: 4rem 0;
     text-align: center;
 }
@@ -105,19 +105,19 @@ body {
 .hero-content h2 {
     font-size: 3rem;
     font-weight: 700;
-    color: #0d9488;
+    color: #00a2ed;
     margin-bottom: 1rem;
 }
 
 .hero-content p {
     font-size: 1.2rem;
-    color: #64748b;
+    color: #333;
     margin-bottom: 2rem;
 }
 
 .cta-button {
     display: inline-block;
-    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+    background: linear-gradient(135deg, #00a2ed 0%, #0091d4 100%);
     color: white;
     padding: 1rem 2rem;
     text-decoration: none;
@@ -129,7 +129,7 @@ body {
 
 .cta-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(13, 148, 136, 0.3);
+    box-shadow: 0 10px 25px rgba(0, 162, 237, 0.4);
 }
 
 /* Products Section */
@@ -141,7 +141,7 @@ body {
     text-align: center;
     font-size: 2.5rem;
     font-weight: 700;
-    color: #0d9488;
+    color: #00a2ed;
     margin-bottom: 3rem;
 }
 
@@ -162,7 +162,7 @@ body {
 
 .product-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 30px rgba(0,162,237,0.2);
 }
 
 .product-image {
@@ -192,7 +192,7 @@ body {
 .product-title {
     font-size: 1.3rem;
     font-weight: 600;
-    color: #0d9488;
+    color: #00a2ed;
     margin-bottom: 0.5rem;
 }
 
@@ -250,13 +250,13 @@ body {
 }
 
 .size-option:hover {
-    border-color: #14b8a6;
-    background-color: #ccfbf1;
+    border-color: #00a2ed;
+    background-color: #e0f4ff;
 }
 
 .size-option.selected {
-    border-color: #0d9488;
-    background-color: #0d9488;
+    border-color: #00a2ed;
+    background-color: #00a2ed;
     color: white;
 }
 
@@ -295,7 +295,7 @@ body {
     text-align: center;
     font-size: 2.5rem;
     font-weight: 700;
-    color: #0d9488;
+    color: #00a2ed;
     margin-bottom: 3rem;
 }
 
@@ -322,7 +322,7 @@ body {
 .cart-item-info h3 {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #0d9488;
+    color: #00a2ed;
     margin-bottom: 0.3rem;
 }
 
@@ -392,12 +392,12 @@ body {
 
 .cart-total h3 {
     font-size: 1.8rem;
-    color: #0d9488;
+    color: #00a2ed;
     margin-bottom: 1.5rem;
 }
 
 .checkout-btn {
-    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+    background: linear-gradient(135deg, #00a2ed 0%, #0091d4 100%);
     color: white;
     border: none;
     padding: 1rem 2rem;
@@ -410,7 +410,7 @@ body {
 
 .checkout-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(13, 148, 136, 0.3);
+    box-shadow: 0 10px 25px rgba(0, 162, 237, 0.4);
 }
 
 /* Modal Styles */
@@ -448,12 +448,12 @@ body {
 }
 
 .close:hover {
-    color: #0d9488;
+    color: #00a2ed;
 }
 
 .checkout-info {
-    background: #ccfbf1;
-    border: 1px solid #14b8a6;
+    background: #e0f4ff;
+    border: 1px solid #00a2ed;
     border-radius: 8px;
     padding: 1rem;
     margin-bottom: 1.5rem;
@@ -461,7 +461,7 @@ body {
 
 .checkout-info p {
     margin: 0;
-    color: #115e59;
+    color: #004a70;
     font-size: 0.95rem;
     line-height: 1.5;
 }
@@ -494,7 +494,7 @@ body {
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #14b8a6;
+    border-color: #00a2ed;
 }
 
 .submit-order-btn {
@@ -525,7 +525,7 @@ body {
     text-align: center;
     font-size: 2.5rem;
     font-weight: 700;
-    color: #0d9488;
+    color: #00a2ed;
     margin-bottom: 3rem;
 }
 
@@ -546,7 +546,7 @@ body {
 }
 
 .contact-info a {
-    color: #0d9488;
+    color: #00a2ed;
     text-decoration: none;
     font-weight: 600;
 }
@@ -565,7 +565,7 @@ body {
     text-align: center;
     font-size: 2.5rem;
     font-weight: 700;
-    color: #0d9488;
+    color: #00a2ed;
     margin-bottom: 3rem;
 }
 
@@ -580,12 +580,12 @@ body {
 
 .admin-login h3 {
     text-align: center;
-    color: #0d9488;
+    color: #00a2ed;
     margin-bottom: 1.5rem;
 }
 
 .admin-login-btn {
-    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+    background: linear-gradient(135deg, #00a2ed 0%, #0091d4 100%);
     color: white;
     border: none;
     padding: 0.8rem 1.5rem;
@@ -599,7 +599,7 @@ body {
 
 .admin-login-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(13, 148, 136, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 162, 237, 0.4);
 }
 
 .admin-dashboard {
@@ -617,15 +617,15 @@ body {
 }
 
 .stat-card {
-    background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
+    background: linear-gradient(135deg, #e0f4ff 0%, #b3e5fc 100%);
     border-radius: 8px;
     padding: 1.5rem;
     text-align: center;
-    border: 1px solid #14b8a6;
+    border: 1px solid #00a2ed;
 }
 
 .stat-card h4 {
-    color: #115e59;
+    color: #004a70;
     margin-bottom: 0.5rem;
     font-size: 1rem;
 }
@@ -633,7 +633,7 @@ body {
 .stat-card p {
     font-size: 2rem;
     font-weight: 700;
-    color: #0d9488;
+    color: #00a2ed;
     margin: 0;
 }
 
@@ -646,11 +646,11 @@ body {
     border-radius: 8px;
     padding: 1rem;
     margin-bottom: 1rem;
-    border-left: 4px solid #0d9488;
+    border-left: 4px solid #00a2ed;
 }
 
 .order-item h5 {
-    color: #0d9488;
+    color: #00a2ed;
     margin-bottom: 0.5rem;
 }
 
@@ -683,13 +683,22 @@ body {
     background-color: rgba(239, 68, 68, 0.2);
 }
 
-/* Footer - Updated to Teal */
+/* Footer - Updated to Pinecrest Blue */
 .footer {
-    background: #0d9488;
+    background: #00a2ed;
     color: white;
     text-align: center;
     padding: 2rem 0;
     margin-top: 4rem;
+}
+
+.footer a {
+    color: white;
+    text-decoration: underline;
+}
+
+.footer a:hover {
+    color: #e0f4ff;
 }
 
 /* Responsive Design */
