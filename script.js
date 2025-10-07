@@ -314,7 +314,7 @@ function hideOrderMessages() {
     document.getElementById('orderErrorMessage').style.display = 'none';
 }
 
-// Submit order
+// Submit order - FIXED VERSION
 async function submitOrder() {
     const formData = new FormData(checkoutForm);
     
@@ -337,32 +337,55 @@ async function submitOrder() {
     document.querySelector('.submit-order-btn').disabled = true;
     
     try {
-        // Send to Google Sheets
-        await fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(orderData)
-        });
+        // Create a form to submit the data
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = GOOGLE_SCRIPT_URL;
+        form.target = 'hidden-iframe';
+        form.style.display = 'none';
         
-        console.log('Order sent to Google Sheets');
+        // Create hidden input with JSON data
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'data';
+        input.value = JSON.stringify(orderData);
+        form.appendChild(input);
         
-        // Show success message
-        hideOrderMessages();
-        document.getElementById('orderSuccessMessage').style.display = 'block';
+        // Create hidden iframe for form submission
+        let iframe = document.getElementById('hidden-iframe');
+        if (!iframe) {
+            iframe = document.createElement('iframe');
+            iframe.id = 'hidden-iframe';
+            iframe.name = 'hidden-iframe';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+        }
         
-        // Clear cart and reset form after 2 seconds
+        // Append form and submit
+        document.body.appendChild(form);
+        form.submit();
+        
+        console.log('Order form submitted');
+        
+        // Show success message after a delay
         setTimeout(() => {
-            cart = [];
-            updateCartDisplay();
-            checkoutModal.style.display = 'none';
-            checkoutForm.reset();
             hideOrderMessages();
-            document.querySelector('.submit-order-btn').disabled = false;
-            showSection('products');
-        }, 2000);
+            document.getElementById('orderSuccessMessage').style.display = 'block';
+            
+            // Clean up form
+            document.body.removeChild(form);
+            
+            // Clear cart and reset after 2 seconds
+            setTimeout(() => {
+                cart = [];
+                updateCartDisplay();
+                checkoutModal.style.display = 'none';
+                checkoutForm.reset();
+                hideOrderMessages();
+                document.querySelector('.submit-order-btn').disabled = false;
+                showSection('products');
+            }, 2000);
+        }, 1000);
         
     } catch (error) {
         console.error('Error submitting order:', error);
