@@ -31,7 +31,7 @@ const products = [
 
 // IMPORTANT: Replace this with your Google Apps Script Web App URL
 // Instructions to get this URL are in the setup guide
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxIrs7KdsimRvfQ7v2sSw-YuzVUqs5Lf5aXAiskv9_BkBO0UVZ1Ar7e2_MsUj-TT-od/exec';
+const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
 
 // Cart functionality
 let cart = JSON.parse(localStorage.getItem('sloanCanyonCart')) || [];
@@ -61,6 +61,7 @@ const ADMIN_PASSWORD = "robotics2024";
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', function() {
+    loadLogoImage();
     renderProducts();
     updateCartDisplay();
     setupEventListeners();
@@ -68,6 +69,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show products page by default
     showSection('products');
 });
+
+// Load logo image
+function loadLogoImage() {
+    const logoContainer = document.getElementById('logoImage');
+    const logoImg = new Image();
+    logoImg.src = 'images/logo.png';
+    logoImg.alt = 'Pinecrest Robotics Logo';
+    logoImg.style.width = '100%';
+    logoImg.style.height = '100%';
+    logoImg.style.objectFit = 'contain';
+    
+    logoImg.onload = function() {
+        logoContainer.innerHTML = '';
+        logoContainer.appendChild(logoImg);
+    };
+    
+    // If image fails to load, keep the emoji
+    logoImg.onerror = function() {
+        console.log('Logo image not found, using emoji fallback');
+    };
+}
 
 // Render products
 function renderProducts() {
