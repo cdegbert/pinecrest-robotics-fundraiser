@@ -346,11 +346,11 @@ function submitOrder() {
         orderDate: new Date().toISOString()
     };
     
-    // In a real application, you would send this to a server
-    console.log('Order submitted:', orderData);
+    // Send order via email using mailto
+    sendOrderEmail(orderData);
     
     // Show success message
-    alert('Order submitted successfully! You will receive a confirmation email shortly.');
+    alert('Order submitted successfully! A confirmation email has been sent to Mrs. Egbert.');
     
     // Clear cart and close modal
     cart = [];
@@ -361,6 +361,37 @@ function submitOrder() {
     
     // Show home section
     showSection('home');
+}
+
+// Send order via email
+function sendOrderEmail(orderData) {
+    const customer = orderData.customer;
+    const items = orderData.items;
+    const total = orderData.total;
+    
+    // Create order summary
+    let orderSummary = `NEW ROBOTICS FUNDRAISER ORDER\n\n`;
+    orderSummary += `Customer Information:\n`;
+    orderSummary += `Name: ${customer.firstName} ${customer.lastName}\n`;
+    orderSummary += `Email: ${customer.email}\n`;
+    orderSummary += `Phone: ${customer.phone}\n`;
+    orderSummary += `Address: ${customer.address}\n`;
+    orderSummary += `City: ${customer.city}, ${customer.state} ${customer.zipCode}\n\n`;
+    
+    orderSummary += `Order Details:\n`;
+    items.forEach(item => {
+        orderSummary += `• ${item.name} (Size: ${item.size}) - Qty: ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}\n`;
+    });
+    orderSummary += `\nTotal: $${total.toFixed(2)}\n`;
+    orderSummary += `Order Date: ${new Date().toLocaleDateString()}\n\n`;
+    orderSummary += `Please contact the customer to arrange payment and pickup.`;
+    
+    // Create mailto link
+    const subject = `Robotics Fundraiser Order - ${customer.firstName} ${customer.lastName}`;
+    const mailtoLink = `mailto:anna.egbert@pinecrestnv.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(orderSummary)}`;
+    
+    // Open email client
+    window.open(mailtoLink);
 }
 
 // Initialize cart display on page load

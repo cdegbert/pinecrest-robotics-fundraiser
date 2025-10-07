@@ -451,6 +451,21 @@ body {
     color: #1e40af;
 }
 
+.checkout-info {
+    background: #f0f9ff;
+    border: 1px solid #0ea5e9;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.checkout-info p {
+    margin: 0;
+    color: #0c4a6e;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
 .checkout-form {
     display: grid;
     gap: 1.5rem;
