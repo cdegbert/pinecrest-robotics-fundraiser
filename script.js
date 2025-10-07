@@ -31,7 +31,7 @@ const products = [
 
 // IMPORTANT: Replace this with your Google Apps Script Web App URL
 // Instructions to get this URL are in the setup guide
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxIrs7KdsimRvfQ7v2sSw-YuzVUqs5Lf5aXAiskv9_BkBO0UVZ1Ar7e2_MsUj-TT-od/exec';
 
 // Cart functionality
 let cart = JSON.parse(localStorage.getItem('sloanCanyonCart')) || [];
