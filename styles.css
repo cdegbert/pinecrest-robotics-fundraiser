@@ -555,6 +555,134 @@ body {
     text-decoration: underline;
 }
 
+/* Admin Section */
+.admin-section {
+    padding: 4rem 0;
+    background: #f8fafc;
+}
+
+.admin-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1e40af;
+    margin-bottom: 3rem;
+}
+
+.admin-login {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.admin-login h3 {
+    text-align: center;
+    color: #1e40af;
+    margin-bottom: 1.5rem;
+}
+
+.admin-login-btn {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+}
+
+.admin-login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(30, 64, 175, 0.3);
+}
+
+.admin-dashboard {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid #0ea5e9;
+}
+
+.stat-card h4 {
+    color: #0c4a6e;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.stat-card p {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e40af;
+    margin: 0;
+}
+
+.orders-list {
+    margin-bottom: 2rem;
+}
+
+.order-item {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #1e40af;
+}
+
+.order-item h5 {
+    color: #1e40af;
+    margin-bottom: 0.5rem;
+}
+
+.order-item p {
+    margin: 0.3rem 0;
+    color: #374151;
+}
+
+.logout-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: #dc2626;
+}
+
+.admin-link {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444 !important;
+}
+
+.admin-link:hover {
+    background-color: rgba(239, 68, 68, 0.2);
+}
+
 /* Footer */
 .footer {
     background: #1e40af;

@@ -52,11 +52,17 @@ function getProductEmoji(productId) {
     return emojis[productId] || "🤖";
 }
 
+// Admin password (in a real app, this would be server-side)
+const ADMIN_PASSWORD = "robotics2024";
+
 // Initialize the app
 document.addEventListener('DOMContentLoaded', function() {
     renderProducts();
     updateCartDisplay();
     setupEventListeners();
+    setupAdminEventListeners();
+    // Show products page by default
+    showSection('products');
 });
 
 // Render products
@@ -346,6 +352,9 @@ function submitOrder() {
         orderDate: new Date().toISOString()
     };
     
+    // Save order for admin panel
+    saveOrderForAdmin(orderData);
+    
     // Send order via email using mailto
     sendOrderEmail(orderData);
     
@@ -392,6 +401,72 @@ function sendOrderEmail(orderData) {
     
     // Open email client
     window.open(mailtoLink);
+}
+
+// Save order for admin panel
+function saveOrderForAdmin(orderData) {
+    const orders = JSON.parse(localStorage.getItem('adminOrders')) || [];
+    orders.push(orderData);
+    localStorage.setItem('adminOrders', JSON.stringify(orders));
+}
+
+// Setup admin event listeners
+function setupAdminEventListeners() {
+    const adminLoginForm = document.getElementById('adminLoginForm');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    if (adminLoginForm) {
+        adminLoginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('adminPassword').value;
+            
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminDashboard').style.display = 'block';
+                updateAdminStats();
+            } else {
+                alert('Invalid password. Please try again.');
+            }
+        });
+    }
+    
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+            document.getElementById('adminLogin').style.display = 'block';
+            document.getElementById('adminDashboard').style.display = 'none';
+            document.getElementById('adminPassword').value = '';
+        });
+    }
+}
+
+// Update admin statistics
+function updateAdminStats() {
+    const orders = JSON.parse(localStorage.getItem('adminOrders')) || [];
+    const totalOrders = orders.length;
+    const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
+    
+    document.getElementById('totalOrders').textContent = totalOrders;
+    document.getElementById('totalRevenue').textContent = `$${totalRevenue.toFixed(2)}`;
+    
+    // Display recent orders
+    const ordersList = document.getElementById('ordersList');
+    if (orders.length === 0) {
+        ordersList.innerHTML = '<h4>Recent Orders</h4><p>No orders yet. Orders will appear here when customers place them.</p>';
+    } else {
+        let ordersHTML = '<h4>Recent Orders</h4>';
+        orders.slice(-5).reverse().forEach((order, index) => {
+            ordersHTML += `
+                <div class="order-item">
+                    <h5>Order #${orders.length - index}</h5>
+                    <p><strong>Customer:</strong> ${order.customer.firstName} ${order.customer.lastName}</p>
+                    <p><strong>Email:</strong> ${order.customer.email}</p>
+                    <p><strong>Total:</strong> $${order.total.toFixed(2)}</p>
+                    <p><strong>Date:</strong> ${new Date(order.orderDate).toLocaleDateString()}</p>
+                </div>
+            `;
+        });
+        ordersList.innerHTML = ordersHTML;
+    }
 }
 
 // Initialize cart display on page load
