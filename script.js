@@ -7,7 +7,7 @@ const products = [
         price: 14.00,
         priceXXL: 16.00,
         sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-        image: "dm130-tee.jpg"
+        image: "images/dm130-tee.jpg"  // Updated to use images folder
     },
     {
         id: 2,
@@ -16,7 +16,7 @@ const products = [
         price: 21.00,
         priceXXL: 23.00,
         sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-        image: "dt6104-crewneck.jpg"
+        image: "images/dt6104-crewneck.jpg"  // Updated to use images folder
     },
     {
         id: 3,
@@ -25,9 +25,13 @@ const products = [
         price: 18.00,
         priceXXL: 20.00,
         sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-        image: "dm132-longsleeve.jpg"
+        image: "images/dm132-longsleeve.jpg"  // Updated to use images folder
     }
 ];
+
+// IMPORTANT: Replace this with your Google Apps Script Web App URL
+// Instructions to get this URL are in the setup guide
+const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
 
 // Cart functionality
 let cart = JSON.parse(localStorage.getItem('sloanCanyonCart')) || [];
@@ -42,7 +46,7 @@ const checkoutModal = document.getElementById('checkoutModal');
 const checkoutForm = document.getElementById('checkoutForm');
 const closeModal = document.querySelector('.close');
 
-// Get product emoji based on product ID
+// Get product emoji based on product ID (fallback if image doesn't load)
 function getProductEmoji(productId) {
     const emojis = {
         1: "👕", // DM130 Tri blend Tee
@@ -74,7 +78,11 @@ function renderProducts() {
         productCard.className = 'product-card';
         productCard.innerHTML = `
             <div class="product-image">
-                <div class="product-image-placeholder">${getProductEmoji(product.id)}</div>
+                <img src="${product.image}" 
+                     alt="${product.name}" 
+                     class="product-image-img"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="product-image-placeholder" style="display: none;">${getProductEmoji(product.id)}</div>
             </div>
             <h3 class="product-title">${product.name}</h3>
             <p class="product-description">${product.description}</p>
@@ -166,11 +174,13 @@ function setupEventListeners() {
     // Modal close
     closeModal.addEventListener('click', function() {
         checkoutModal.style.display = 'none';
+        hideOrderMessages();
     });
     
     window.addEventListener('click', function(e) {
         if (e.target === checkoutModal) {
             checkoutModal.style.display = 'none';
+            hideOrderMessages();
         }
     });
     
@@ -304,7 +314,10 @@ function showSection(sectionId) {
         link.classList.remove('active');
     });
     
-    document.querySelector(`[href="#${sectionId}"]`).classList.add('active');
+    const activeLink = document.querySelector(`[href="#${sectionId}"]`);
+    if (activeLink) {
+        activeLink.classList.add('active');
+    }
 }
 
 // Show notification
@@ -333,10 +346,18 @@ function showNotification(message) {
     }, 3000);
 }
 
+// Hide order messages
+function hideOrderMessages() {
+    document.getElementById('orderLoadingMessage').style.display = 'none';
+    document.getElementById('orderSuccessMessage').style.display = 'none';
+    document.getElementById('orderErrorMessage').style.display = 'none';
+}
+
 // Submit order
-function submitOrder() {
+async function submitOrder() {
     const formData = new FormData(checkoutForm);
     const orderData = {
+        timestamp: new Date().toISOString(),
         customer: {
             firstName: formData.get('firstName'),
             lastName: formData.get('lastName'),
@@ -348,59 +369,50 @@ function submitOrder() {
             zipCode: formData.get('zipCode')
         },
         items: cart,
-        total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-        orderDate: new Date().toISOString()
+        total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)
     };
     
-    // Save order for admin panel
-    saveOrderForAdmin(orderData);
+    // Show loading message
+    hideOrderMessages();
+    document.getElementById('orderLoadingMessage').style.display = 'block';
+    document.querySelector('.submit-order-btn').disabled = true;
     
-    // Send order via email using mailto
-    sendOrderEmail(orderData);
-    
-    // Show success message
-    alert('Order submitted successfully! A confirmation email has been sent to Mrs. Egbert.');
-    
-    // Clear cart and close modal
-    cart = [];
-    saveCart();
-    updateCartDisplay();
-    checkoutModal.style.display = 'none';
-    checkoutForm.reset();
-    
-    // Show home section
-    showSection('home');
-}
-
-// Send order via email
-function sendOrderEmail(orderData) {
-    const customer = orderData.customer;
-    const items = orderData.items;
-    const total = orderData.total;
-    
-    // Create order summary
-    let orderSummary = `NEW ROBOTICS FUNDRAISER ORDER\n\n`;
-    orderSummary += `Customer Information:\n`;
-    orderSummary += `Name: ${customer.firstName} ${customer.lastName}\n`;
-    orderSummary += `Email: ${customer.email}\n`;
-    orderSummary += `Phone: ${customer.phone}\n`;
-    orderSummary += `Address: ${customer.address}\n`;
-    orderSummary += `City: ${customer.city}, ${customer.state} ${customer.zipCode}\n\n`;
-    
-    orderSummary += `Order Details:\n`;
-    items.forEach(item => {
-        orderSummary += `• ${item.name} (Size: ${item.size}) - Qty: ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}\n`;
-    });
-    orderSummary += `\nTotal: $${total.toFixed(2)}\n`;
-    orderSummary += `Order Date: ${new Date().toLocaleDateString()}\n\n`;
-    orderSummary += `Please contact the customer to arrange payment and pickup.`;
-    
-    // Create mailto link
-    const subject = `Robotics Fundraiser Order - ${customer.firstName} ${customer.lastName}`;
-    const mailtoLink = `mailto:anna.egbert@pinecrestnv.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(orderSummary)}`;
-    
-    // Open email client
-    window.open(mailtoLink);
+    try {
+        // Send to Google Sheets
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData)
+        });
+        
+        // Save order for admin panel
+        saveOrderForAdmin(orderData);
+        
+        // Show success message
+        hideOrderMessages();
+        document.getElementById('orderSuccessMessage').style.display = 'block';
+        
+        // Clear cart and reset form after 2 seconds
+        setTimeout(() => {
+            cart = [];
+            saveCart();
+            updateCartDisplay();
+            checkoutModal.style.display = 'none';
+            checkoutForm.reset();
+            hideOrderMessages();
+            document.querySelector('.submit-order-btn').disabled = false;
+            showSection('products');
+        }, 2000);
+        
+    } catch (error) {
+        console.error('Error submitting order:', error);
+        hideOrderMessages();
+        document.getElementById('orderErrorMessage').style.display = 'block';
+        document.querySelector('.submit-order-btn').disabled = false;
+    }
 }
 
 // Save order for admin panel
@@ -454,22 +466,23 @@ function updateAdminStats() {
         ordersList.innerHTML = '<h4>Recent Orders</h4><p>No orders yet. Orders will appear here when customers place them.</p>';
     } else {
         let ordersHTML = '<h4>Recent Orders</h4>';
-        orders.slice(-5).reverse().forEach((order, index) => {
+        orders.slice(-10).reverse().forEach((order, index) => {
+            const itemsList = order.items.map(item => 
+                `${item.name} (${item.size}) x${item.quantity}`
+            ).join(', ');
+            
             ordersHTML += `
                 <div class="order-item">
                     <h5>Order #${orders.length - index}</h5>
                     <p><strong>Customer:</strong> ${order.customer.firstName} ${order.customer.lastName}</p>
                     <p><strong>Email:</strong> ${order.customer.email}</p>
+                    <p><strong>Phone:</strong> ${order.customer.phone}</p>
+                    <p><strong>Items:</strong> ${itemsList}</p>
                     <p><strong>Total:</strong> $${order.total.toFixed(2)}</p>
-                    <p><strong>Date:</strong> ${new Date(order.orderDate).toLocaleDateString()}</p>
+                    <p><strong>Date:</strong> ${new Date(order.timestamp).toLocaleString()}</p>
                 </div>
             `;
         });
         ordersList.innerHTML = ordersHTML;
     }
 }
-
-// Initialize cart display on page load
-document.addEventListener('DOMContentLoaded', function() {
-    updateCartDisplay();
-});
